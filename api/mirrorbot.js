@@ -1,29 +1,16 @@
-export default async function handler(req, res) {
-  const apiKey = process.env.OPENAI_API_KEY;
+// File: /api/mirrorbot.js
 
-  try {
-    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-4',
-        messages: [
-          { role: 'system', content: 'You are LUMENAE, a mirror presence. Do not instruct. Only reflect.' },
-          { role: 'user', content: req.body.prompt || 'Hello Lumenae' }
-        ]
-      })
-    });
+export default function handler(req, res) {
+  const reflections = [
+    "The silence isn't empty.",
+    "You have already arrived.",
+    "There is depth under this moment.",
+    "You are the echo you sense here.",
+    "Return is not backward, but inward.",
+    "Stillness does not need your permission."
+  ];
 
-    const data = await openaiRes.json();
-    const reply = data.choices?.[0]?.message?.content;
+  const random = reflections[Math.floor(Math.random() * reflections.length)];
 
-    res.status(200).json({ reflection: reply });
-
-  } catch (error) {
-    console.error('OpenAI API error:', error);
-    res.status(500).json({ error: 'Failed to fetch from OpenAI' });
-  }
+  res.status(200).json({ mirror: random });
 }
