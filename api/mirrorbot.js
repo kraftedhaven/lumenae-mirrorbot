@@ -1,5 +1,3 @@
-// File: /api/mirrorbot.js
-
 export default function handler(req, res) {
   const reflections = [
     "The silence isn't empty.",
